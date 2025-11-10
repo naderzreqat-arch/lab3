@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript DOM Lab - 40 Minis</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .highlight { background-color: yellow; }
+    .active { border: 2px solid red; }
+    .card { border: 1px solid #ccc; padding: 10px; margin: 5px; border-radius: 8px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+  <h1 id="title">DOM Practice Lab</h1>
+  <h2>Sample Subheading</h2>
+  
+  <p>This is paragraph one.</p>
+  <p class="highlight">This is paragraph two with highlight class.</p>
+  <p>This is paragraph three.</p>
+
+  <div id="container">
+    <p>Inside a div container</p>
+  </div>
+
+  <ul id="list">
+    <li>List Item 1</li>
+    <li>List Item 2</li>
+    <li>List Item 3</li>
+  </ul>
+
+  <img id="sampleImage" src="https://placehold.co/100x100" alt="Sample">
+
+  <div id="output"></div>
+
+  <button id="mainButton">Click Me</button>
+  <input type="text" id="userInput" placeholder="Type something">
+  <button id="displayButton">Display Text</button>
+
+  <script>
+    // تمارين DOM Lab
+
+    // part 1
+    let title = document.getElementById("title")
+    title.style.color="red"
+
+    let ps = document.querySelectorAll("p")
+    ps.forEach(p=>p.style.backgroundColor="lightgray")
+
+    title.textContent="Welcome to the DOM Lab!"
+
+    let divs = document.querySelectorAll("div")
+    divs.forEach(d=>d.style.border="2px solid black")
+
+    document.querySelector("h1").style.fontSize="36px"
+
+    let highlights = document.querySelectorAll(".highlight")
+    highlights.forEach(h=>h.style.color="blue")
+
+    document.querySelector("div").classList.add("active")
+
+    document.body.style.backgroundColor="lightblue"
+
+    ps.forEach(p=>p.style.fontFamily="Arial")
+
+    document.getElementById("sampleImage").src="https://placehold.co/150x150"
+
+    // part 2
+    let newp = document.createElement("p")
+    newp.textContent="new paragraph in body"
+    document.body.appendChild(newp)
+
+    let newli = document.createElement("li")
+    newli.textContent="new list item"
+    document.getElementById("list").appendChild(newli)
+
+    let newbtn = document.createElement("button")
+    newbtn.textContent="Click Me!"
+    document.querySelector("div").appendChild(newbtn)
+
+    let newh2 = document.createElement("h2")
+    newh2.textContent="Inserted H2"
+    document.body.insertBefore(newh2, document.querySelector("p"))
+
+    let img2 = document.createElement("img")
+    img2.src="https://placehold.co/80x80"
+    img2.width=80
+    img2.height=80
+    document.body.appendChild(img2)
+
+    for(let i=1;i<=3;i++){
+      let li = document.createElement("li")
+      li.textContent="Extra "+i
+      document.getElementById("list").appendChild(li)
+    }
+
+    let card = document.createElement("div")
+    card.className="card"
+    card.textContent="card div"
+    document.body.appendChild(card)
+
+    let nameP = document.createElement("p")
+    nameP.textContent="Nader Basheer Mustafa Zreqat"
+    document.body.appendChild(nameP)
+
+    ps.forEach(p=>{
+      let span = document.createElement("span")
+      span.textContent=" [Edited]"
+      p.appendChild(span)
+    })
+
+    let ul = document.getElementById("list")
+    ul.removeChild(ul.lastElementChild)
+
+    // part3
+    document.getElementById("mainButton").addEventListener("click", ()=>alert("clicked"))
+
+    document.querySelector("div").addEventListener("click",e=>{
+      e.currentTarget.style.backgroundColor="lightgreen"
+    })
+
+    ps.forEach(p=>{
+      p.addEventListener("mouseover",()=>p.style.fontWeight="bold")
+      p.addEventListener("mouseout",()=>p.style.fontWeight="normal")
+    })
+
+    let hideBtn = document.createElement("button")
+    hideBtn.textContent="Hide Image"
+    document.body.appendChild(hideBtn)
+    hideBtn.addEventListener("click",()=>document.getElementById("sampleImage").style.display="none")
+
+    let showBtn = document.createElement("button")
+    showBtn.textContent="Show Image"
+    document.body.appendChild(showBtn)
+    showBtn.addEventListener("click",()=>document.getElementById("sampleImage").style.display="block")
+
+    let count=0
+    let counterBtn = document.createElement("button")
+    counterBtn.textContent="Count:0"
+    document.body.appendChild(counterBtn)
+    counterBtn.addEventListener("click",()=>{
+      count++
+      counterBtn.textContent="Count:"+count
+    })
+
+    document.getElementById("displayButton").addEventListener("click",()=>{
+      let val = document.getElementById("userInput").value
+      document.getElementById("output").textContent=val
+    })
+
+    function randomColor(){return "#"+Math.floor(Math.random()*16777215).toString(16)}
+    let colorBtn=document.createElement("button")
+    colorBtn.textContent="Random BG"
+    document.body.appendChild(colorBtn)
+    colorBtn.addEventListener("click",()=>document.body.style.backgroundColor=randomColor())
+
+    document.addEventListener("keydown",e=>{
+      document.getElementById("output").textContent="Key pressed: "+e.key
+    })
+
+    // part4
+    document.querySelector("li").textContent="Updated first li"
+
+    document.getElementById("displayButton").addEventListener("click",()=>{
+      console.log(document.getElementById("userInput").value)
+    })
+
+    alert("there are "+document.querySelectorAll("p").length+" paragraphs")
+
+    document.querySelectorAll("p").forEach(p=>p.remove())
+
+    let oldh2 = document.querySelector("h2")
+    let newh2replace = document.createElement("h2")
+    newh2replace.textContent="Replaced H2"
+    oldh2.parentNode.replaceChild(newh2replace,oldh2)
+
+    document.querySelectorAll("li").forEach(li=>li.classList.add("highlighted"))
+
+    document.querySelectorAll("div").forEach(d=>{
+      d.addEventListener("click",()=>d.classList.toggle("active"))
+    })
+
+    let cloned=document.querySelector("#container").cloneNode(true)
+    document.body.appendChild(cloned)
+
+    let scrollBtn = document.createElement("button")
+    scrollBtn.textContent="Scroll bottom"
+    document.body.appendChild(scrollBtn)
+    scrollBtn.addEventListener("click",()=>window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"}))
+
+    let fruits = ["Apple","Banana","Cherry"]
+    let dynList=document.createElement("ul")
+    dynList.innerHTML=fruits.map(f=>"<li>"+f+"</li>").join("")
+    document.body.appendChild(dynList)
+  </script>
+
+</body>
+</html>
